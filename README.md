@@ -107,7 +107,3 @@ KavinKumar K, KishoreKumar S, and Logeshwar B 🙌
 
 #Python #IoT #ESP32 #Flask #ChartJS #GitHub #StudentProject #KonguEngineering
 ````
-
----
-
-Would you like me to **generate the actual README.md file** you can upload or help you **add preview images** for GitHub and LinkedIn?
