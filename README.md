@@ -1,6 +1,3 @@
-## 📄 README.md (Trending Style)
-
-````markdown
 # 🌐 Real-Time IoT Temperature & Humidity Dashboard
 
 > A live IoT monitoring solution using ESP32, Flask, and Chart.js 🚀
