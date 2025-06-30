@@ -74,11 +74,7 @@ Open your browser at `http://localhost:5000`
 ⭐ Star this repo if you like it!
 
 ---
-
-## 🔗 LinkedIn Post Example
-
-```markdown
-🎉 Excited to share our latest #IoT project!
+<--🎉 Excited to share our latest #IoT project!
 
 We built a **Real-Time Temperature & Humidity Monitoring System** using:
 📡 ESP32  
@@ -103,4 +99,4 @@ We built a **Real-Time Temperature & Humidity Monitoring System** using:
 Thanks to my awesome teammates:  
 KavinKumar K, KishoreKumar S, and Logeshwar B 🙌
 
-#Python #IoT #ESP32 #Flask #ChartJS #GitHub #StudentProject #KonguEngineering
+#Python #IoT #ESP32 #Flask #ChartJS #GitHub #StudentProject #KonguEngineering -->
