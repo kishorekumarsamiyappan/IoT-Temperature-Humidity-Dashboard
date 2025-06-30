@@ -39,6 +39,8 @@ python app.py
 
 Open your browser at `http://localhost:5000`
 
+## 🔴 Screenshot
+
 ## 📈 Live Dashboard
 
 * Real-time updates every 4 seconds
