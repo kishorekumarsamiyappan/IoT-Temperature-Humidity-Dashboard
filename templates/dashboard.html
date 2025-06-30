@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Modern IoT Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      background: #0d1117;
+      color: #fff;
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      padding: 30px;
+    }
+
+    h1 {
+      font-size: 2em;
+      margin-bottom: 10px;
+      color: #58a6ff;
+    }
+
+    .values {
+      font-size: 1.5em;
+      margin: 15px;
+    }
+
+    .card {
+      background: #161b22;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+      max-width: 800px;
+      margin: auto;
+    }
+
+    canvas {
+      max-width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <h1>Live IoT Temperature & Humidity Dashboard</h1>
+
+  <div class="card">
+    <div class="values">
+      🌡️ Temp: <span id="temp">--</span> °C | 💧 Hum: <span id="hum">--</span> %
+    </div>
+    <canvas id="iotChart"></canvas>
+  </div>
+
+  <script>
+    const ctx = document.getElementById("iotChart").getContext("2d");
+
+    const iotChart = new Chart(ctx, {
+      type: "line",
+      data: {
+        labels: [],
+        datasets: [
+          {
+            label: "Temperature (°C)",
+            data: [],
+            borderColor: "#ff6b6b",
+            backgroundColor: "rgba(255, 107, 107, 0.2)",
+            fill: true,
+            tension: 0.5,
+            pointRadius: 5,
+            pointHoverRadius: 8,
+            pointBackgroundColor: "#ff6b6b",
+          },
+          {
+            label: "Humidity (%)",
+            data: [],
+            borderColor: "#4dabf7",
+            backgroundColor: "rgba(77, 171, 247, 0.2)",
+            fill: true,
+            tension: 0.5,
+            pointRadius: 5,
+            pointHoverRadius: 8,
+            pointBackgroundColor: "#4dabf7",
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        animation: {
+          duration: 1000,
+          easing: "easeOutQuart"
+        },
+        scales: {
+          x: {
+            ticks: { color: "#ccc" },
+            grid: { color: "rgba(255,255,255,0.05)" },
+            title: {
+              display: true,
+              text: "Time",
+              color: "#ccc",
+              font: { weight: "bold" }
+            }
+          },
+          y: {
+            ticks: { color: "#ccc" },
+            grid: { color: "rgba(255,255,255,0.05)" },
+            beginAtZero: true
+          }
+        },
+        plugins: {
+          legend: {
+            labels: {
+              color: "#eee",
+              font: { weight: "bold" }
+            }
+          },
+          tooltip: {
+            backgroundColor: "rgba(0,0,0,0.8)",
+            borderColor: "#444",
+            borderWidth: 1
+          }
+        }
+      }
+    });
+
+    async function fetchData() {
+      try {
+        const response = await fetch("/live-data");
+        const result = await response.json();
+        const now = new Date().toLocaleTimeString();
+
+        document.getElementById("temp").textContent = result.temperature.toFixed(1);
+        document.getElementById("hum").textContent = result.humidity.toFixed(1);
+
+        if (iotChart.data.labels.length >= 12) {
+          iotChart.data.labels.shift();
+          iotChart.data.datasets[0].data.shift();
+          iotChart.data.datasets[1].data.shift();
+        }
+
+        iotChart.data.labels.push(now);
+        iotChart.data.datasets[0].data.push(result.temperature);
+        iotChart.data.datasets[1].data.push(result.humidity);
+        iotChart.update();
+
+      } catch (err) {
+        console.error("Fetch error:", err);
+      }
+    }
+
+    setInterval(fetchData, 4000);
+    fetchData();
+  </script>
+</body>
+</html>
